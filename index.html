@@ -7,8 +7,10 @@
   <meta name="description" content="عيادة لمى للجلدية والتجميل في جدة — خدمات جلدية وتجميلية متخصصة بأيدي أفضل الأطباء. احجزي موعدك الآن." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700;800;900&display=swap"></noscript>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <link rel="stylesheet" href="style.css" />
   <style>
   :root {
@@ -25,7 +27,7 @@
     --green: #25D366;
     --shadow: 0 4px 24px rgba(44,31,62,.07);
     --shadow-lg: 0 12px 48px rgba(44,31,62,.13);
-    --shadow-xl: 0 24px 80px rgba(44,31,62,.16);
+    --shadow-xl: 0 24px 80px rgba(44,31,62,.18);
     --radius: 12px;
     --radius-xl: 20px;
   }
@@ -37,7 +39,7 @@
   .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(44,31,62,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.07); transition: .3s; }
   .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 66px; }
   .nav-logo { font-size: 1.2rem; font-weight: 900; color: white; text-decoration: none; }
-  .nav-logo span { color: var(--rose); }
+  .nav-logo span { color: #e8a0aa; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { color: rgba(255,255,255,.75); text-decoration: none; font-size: .88rem; font-weight: 600; transition: color .2s; }
   .nav-links a:hover { color: white; }
@@ -60,11 +62,9 @@
       radial-gradient(ellipse 40% 50% at 85% 70%, rgba(201,168,76,.08) 0%, transparent 55%);
   }
   .hero::after {
-    content: '';
-    position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0;
     background-image: radial-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
-    background-size: 30px 30px;
-    pointer-events: none;
+    background-size: 30px 30px; pointer-events: none;
   }
   .hero-inner {
     max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem;
@@ -102,48 +102,47 @@
   .hero-pill-item { display: flex; align-items: center; gap: .3rem; font-size: .78rem; color: rgba(255,255,255,.55); font-weight: 600; }
   .hero-pill-item span { color: #e8a0aa; }
 
-  /* Hero Visual */
+  /* Hero Visual — image based */
   .hero-visual { position: relative; }
-  .clinic-card {
-    background: white; border-radius: 20px; overflow: hidden;
-    box-shadow: 0 40px 100px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08);
+  .hero-img-wrap {
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08);
+    position: relative;
   }
-  .clinic-card-header {
-    background: linear-gradient(135deg, #2c1f3e, #3d2050);
-    padding: 1.5rem 1.8rem;
-    display: flex; align-items: center; gap: 1rem;
+  .hero-img-wrap img { width: 100%; height: 480px; object-fit: cover; object-position: center top; display: block; }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(44,31,62,.75) 0%, rgba(44,31,62,.1) 55%, transparent 100%);
   }
-  .clinic-logo-circle {
-    width: 52px; height: 52px; border-radius: 50%;
-    background: var(--rose); display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; flex-shrink: 0;
+  .hero-img-stats {
+    position: absolute; bottom: 1.5rem; right: 1.5rem; left: 1.5rem;
+    display: flex; gap: .8rem;
   }
-  .clinic-card-name { color: white; font-weight: 800; font-size: 1rem; }
-  .clinic-card-sub { color: rgba(255,255,255,.5); font-size: .75rem; margin-top: .15rem; }
-  .clinic-card-body { padding: 1.5rem 1.8rem; }
-  .services-mini { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-bottom: 1.2rem; }
-  .service-mini-item {
-    background: var(--rose-lt); border-radius: 10px; padding: .7rem .9rem;
-    display: flex; align-items: center; gap: .5rem;
+  .hero-stat-pill {
+    background: rgba(255,255,255,.95); backdrop-filter: blur(8px);
+    border-radius: 12px; padding: .7rem 1rem; flex: 1; text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
   }
-  .service-mini-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .service-mini-text { font-size: .72rem; font-weight: 700; color: var(--navy); }
-  .book-btn-mini {
-    width: 100%; background: var(--rose); color: white; border: none;
-    border-radius: 50px; padding: .75rem; font-size: .85rem; font-weight: 800;
-    font-family: inherit; cursor: pointer; text-align: center;
-  }
+  .hero-stat-num { font-size: 1.3rem; font-weight: 900; color: var(--navy); line-height: 1.1; }
+  .hero-stat-lbl { font-size: .65rem; color: var(--gray-mid); font-weight: 600; margin-top: .15rem; }
+  .hero-stat-pill.gold { background: var(--rose); }
+  .hero-stat-pill.gold .hero-stat-num,
+  .hero-stat-pill.gold .hero-stat-lbl { color: white; }
+
   .floating-badge {
     position: absolute; background: white; border-radius: 14px;
     padding: .7rem 1rem; display: flex; align-items: center; gap: .6rem;
     box-shadow: 0 8px 32px rgba(0,0,0,.2); animation: float 3s ease-in-out infinite;
+    z-index: 3;
   }
   .fb1 { top: -16px; left: -20px; animation-delay: 0s; }
-  .fb2 { bottom: -16px; right: -16px; animation-delay: 1.4s; }
+  .fb2 { top: 48%; right: -20px; transform: translateY(-50%); animation-delay: 1.4s; }
   .fb-icon { font-size: 1.2rem; }
   .fb-title { font-size: .72rem; font-weight: 800; color: var(--navy); }
   .fb-sub { font-size: .62rem; color: var(--gray-mid); }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  .fb2 { animation: float2 3s ease-in-out infinite; animation-delay: 1.4s; }
+  @keyframes float2 { 0%,100%{transform:translateY(-50%)} 50%{transform:translateY(calc(-50% - 7px))} }
 
   /* Trust bar */
   .trust-section { margin-top: -3rem; position: relative; z-index: 10; padding: 0 1.5rem; }
@@ -174,17 +173,13 @@
   }
   .section-title { font-size: clamp(1.6rem,3vw,2.2rem); font-weight: 900; color: var(--navy); margin-bottom: .5rem; line-height: 1.25; }
   .section-sub { color: var(--gray-mid); font-size: .95rem; max-width: 560px; margin: 0 auto; }
-  .gold-line { display: block; width: 48px; height: 3px; background: var(--rose); border-radius: 2px; margin: .8rem auto; }
+  .rose-line { display: block; width: 48px; height: 3px; background: var(--rose); border-radius: 2px; margin: .8rem auto; }
   .mt2 { margin-top: .8rem; }
   .mt3 { margin-top: 1.5rem; }
   .mt4 { margin-top: 2rem; }
   .g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
-  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem; }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
   @media(max-width:900px){ .g3{grid-template-columns:1fr;} .g2{grid-template-columns:1fr;} }
-
-  /* Cards */
-  .card { background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow); transition: .3s; }
-  .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
 
   /* Services */
   .service-card { background: white; border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); transition: .3s; border-top: 3px solid var(--rose-lt); }
@@ -193,37 +188,42 @@
   .service-title { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: .5rem; }
   .service-text { font-size: .88rem; color: var(--gray-mid); line-height: 1.75; }
 
+  /* About */
+  .about-img { border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-xl); position: relative; }
+  .about-img img { width: 100%; height: 460px; object-fit: cover; object-position: center; display: block; }
+  .about-img-badge {
+    position: absolute; bottom: 1.5rem; right: 1.5rem;
+    background: white; border-radius: 14px; padding: 1rem 1.3rem;
+    box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: .8rem;
+  }
+  .aib-icon { font-size: 1.8rem; }
+  .aib-title { font-weight: 800; color: var(--navy); font-size: .9rem; }
+  .aib-sub { font-size: .75rem; color: var(--gray-mid); margin-top: .1rem; }
+
   /* Doctors */
   .doctor-card { background: white; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow); transition: .3s; text-align: center; }
   .doctor-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-  .doctor-avatar { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
-  .da-1 { background: linear-gradient(135deg, #f9e8ea, #f0d0d4); }
-  .da-2 { background: linear-gradient(135deg, #e8eaf9, #d0d4f0); }
-  .da-3 { background: linear-gradient(135deg, #e8f9ea, #d0f0d4); }
+  .doctor-photo { width: 100%; height: 220px; overflow: hidden; }
+  .doctor-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: .4s; }
+  .doctor-card:hover .doctor-photo img { transform: scale(1.05); }
   .doctor-info { padding: 1.5rem; }
   .doctor-name { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .3rem; }
   .doctor-spec { font-size: .82rem; color: var(--rose); font-weight: 700; margin-bottom: .5rem; }
   .doctor-bio { font-size: .8rem; color: var(--gray-mid); line-height: 1.65; }
 
   /* Testimonials */
-  .testi-card { background: white; border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); position: relative; }
+  .testi-card { background: white; border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); }
   .testi-quote { font-size: 3.5rem; color: var(--rose-lt); font-weight: 900; line-height: .8; margin-bottom: .5rem; }
   .testi-stars { color: #f59e0b; font-size: 1rem; margin-bottom: .8rem; letter-spacing: .1em; }
   .testi-text { font-size: .9rem; color: var(--text-body); line-height: 1.8; margin-bottom: 1.2rem; font-style: italic; }
   .testi-author { display: flex; align-items: center; gap: .8rem; }
-  .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--rose); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .9rem; flex-shrink: 0; }
+  .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--rose); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .95rem; flex-shrink: 0; }
   .testi-name { font-weight: 800; color: var(--navy); font-size: .88rem; }
   .testi-detail { font-size: .75rem; color: var(--gray-mid); }
 
   /* CTA */
-  .cta-section {
-    background: linear-gradient(135deg, #2c1f3e, #3d2050);
-    padding: 88px 0; text-align: center; position: relative; overflow: hidden;
-  }
-  .cta-section::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(181,112,122,.15), transparent);
-  }
+  .cta-section { background: linear-gradient(135deg, #1a0f2e, #3d2050); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(181,112,122,.15), transparent); }
   .cta-title { font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 900; color: white; margin-bottom: .8rem; line-height: 1.25; position: relative; }
   .cta-sub { color: rgba(255,255,255,.55); font-size: .95rem; margin-bottom: 2rem; position: relative; }
 
@@ -231,30 +231,25 @@
   .footer { background: #1a0f2e; padding: 3rem 0 1.5rem; }
   .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
   .footer-logo { font-size: 1.1rem; font-weight: 900; color: white; }
-  .footer-logo span { color: var(--rose); }
-  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-logo span { color: #e8a0aa; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .footer-links a { color: rgba(255,255,255,.45); font-size: .82rem; text-decoration: none; transition: color .2s; }
   .footer-links a:hover { color: white; }
   .footer-copy { max-width: 1200px; margin: 2rem auto 0; padding: 1.5rem 1.5rem 0; border-top: 1px solid rgba(255,255,255,.07); text-align: center; color: rgba(255,255,255,.25); font-size: .78rem; }
 
   /* WhatsApp float */
-  .wa-float {
-    position: fixed; bottom: 1.8rem; left: 1.8rem; z-index: 999;
-    width: 58px; height: 58px; border-radius: 50%;
-    background: #25D366; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 24px rgba(37,211,102,.45); transition: .2s; text-decoration: none;
-    animation: waPulse 2.5s ease-in-out infinite;
-  }
+  .wa-float { position: fixed; bottom: 1.8rem; left: 1.8rem; z-index: 999; width: 58px; height: 58px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(37,211,102,.45); transition: .2s; text-decoration: none; animation: waPulse 2.5s ease-in-out infinite; }
   .wa-float:hover { transform: scale(1.1); }
   @keyframes waPulse { 0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.45)} 50%{box-shadow:0 6px 36px rgba(37,211,102,.7)} }
 
-  /* Mobile hero */
+  /* Mobile */
   @media(max-width:900px){
     .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; padding: 2.5rem 1.5rem; }
     .hero-p { margin: 0 auto 2rem; }
-    .hero-btns { justify-content: center; }
-    .hero-pills { justify-content: center; }
+    .hero-btns, .hero-pills { justify-content: center; }
+    .hero-img-wrap img { height: 300px; }
     .floating-badge { display: none; }
+    .about-img img { height: 280px !important; }
   }
   </style>
 </head>
@@ -271,9 +266,9 @@
     <a href="#" class="nav-logo">عيادة <span>لمى</span></a>
     <ul class="nav-links">
       <li><a href="#services">خدماتنا</a></li>
+      <li><a href="#about">عن العيادة</a></li>
       <li><a href="#doctors">أطباؤنا</a></li>
       <li><a href="#testimonials">آراء العملاء</a></li>
-      <li><a href="#contact">تواصلي معنا</a></li>
     </ul>
     <a href="https://wa.me/212693579039?text=أريد حجز موعد" target="_blank" class="nav-cta">احجزي موعدك</a>
   </div>
@@ -282,7 +277,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div>
+    <div data-aos="fade-right">
       <div class="hero-eyebrow">
         <span class="hero-dot"></span>
         عيادة جلدية وتجميلية — جدة
@@ -306,25 +301,7 @@
       </div>
     </div>
 
-    <div class="hero-visual">
-      <div class="clinic-card">
-        <div class="clinic-card-header">
-          <div class="clinic-logo-circle">💆</div>
-          <div>
-            <div class="clinic-card-name">عيادة لمى للجلدية والتجميل</div>
-            <div class="clinic-card-sub">⭐⭐⭐⭐⭐ &nbsp; 4.9 — 312 تقييم</div>
-          </div>
-        </div>
-        <div class="clinic-card-body">
-          <div class="services-mini">
-            <div class="service-mini-item"><span class="service-mini-icon">✨</span><span class="service-mini-text">تقشير البشرة</span></div>
-            <div class="service-mini-item"><span class="service-mini-icon">💉</span><span class="service-mini-text">البوتوكس والفيلر</span></div>
-            <div class="service-mini-item"><span class="service-mini-icon">🌿</span><span class="service-mini-text">علاج حب الشباب</span></div>
-            <div class="service-mini-item"><span class="service-mini-icon">⚡</span><span class="service-mini-text">ليزر إزالة الشعر</span></div>
-          </div>
-          <div class="book-btn-mini">احجزي موعدك عبر واتساب 📱</div>
-        </div>
-      </div>
+    <div class="hero-visual" data-aos="fade-left">
       <div class="floating-badge fb1">
         <span class="fb-icon">🏅</span>
         <div>
@@ -332,11 +309,29 @@
           <div class="fb-sub">في جلدية التجميل</div>
         </div>
       </div>
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=75" alt="علاج جلدي احترافي" loading="eager" />
+        <div class="hero-img-overlay"></div>
+        <div class="hero-img-stats">
+          <div class="hero-stat-pill">
+            <div class="hero-stat-num">+3000</div>
+            <div class="hero-stat-lbl">عميلة سعيدة</div>
+          </div>
+          <div class="hero-stat-pill">
+            <div class="hero-stat-num">4.9⭐</div>
+            <div class="hero-stat-lbl">تقييم Google</div>
+          </div>
+          <div class="hero-stat-pill gold">
+            <div class="hero-stat-num">100%</div>
+            <div class="hero-stat-lbl">نتائج مضمونة</div>
+          </div>
+        </div>
+      </div>
       <div class="floating-badge fb2">
         <span class="fb-icon">💆‍♀️</span>
         <div>
-          <div class="fb-title">+3,000 عميلة</div>
-          <div class="fb-sub">راضيات عن النتائج</div>
+          <div class="fb-title">استشارة مجانية</div>
+          <div class="fb-sub">تواصلي الآن</div>
         </div>
       </div>
     </div>
@@ -345,7 +340,7 @@
 
 <!-- TRUST BAR -->
 <div class="trust-section">
-  <div class="trust-bar">
+  <div class="trust-bar" data-aos="fade-up">
     <div class="trust-item">
       <div class="trust-num">+<span>3000</span></div>
       <div class="trust-label">عميلة سعيدة</div>
@@ -371,75 +366,124 @@
 <!-- SERVICES -->
 <section class="section" id="services">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center" data-aos="fade-up">
       <span class="eyebrow">خدماتنا</span>
       <h2 class="section-title">كل ما تحتاجينه لبشرة مثالية</h2>
-      <span class="gold-line"></span>
+      <span class="rose-line"></span>
       <p class="section-sub mt2">تقنيات حديثة وأيدي متخصصة لنتائج تدوم</p>
     </div>
     <div class="g3">
-      <div class="service-card">
+      <div class="service-card" data-aos="fade-up" data-aos-delay="0">
         <div class="service-icon">✨</div>
         <h3 class="service-title">تقشير البشرة الكيميائي</h3>
         <p class="service-text">علاج فعّال لتجديد البشرة وإزالة البقع والتصبغات. نتائج واضحة من أول جلسة بأحدث تقنيات التقشير.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-aos="fade-up" data-aos-delay="80">
         <div class="service-icon">💉</div>
         <h3 class="service-title">البوتوكس والفيلر</h3>
         <p class="service-text">إجراءات تجميلية دقيقة لمحو التجاعيد وإعادة الحجم لمناطق الوجه. طبيبة متخصصة ونتائج طبيعية.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-aos="fade-up" data-aos-delay="160">
         <div class="service-icon">⚡</div>
         <h3 class="service-title">ليزر إزالة الشعر</h3>
         <p class="service-text">تقنية ليزر Diode الأحدث لإزالة الشعر بشكل دائم لجميع أنواع البشرة. آمنة وفعّالة ومريحة.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-aos="fade-up" data-aos-delay="0">
         <div class="service-icon">🌿</div>
         <h3 class="service-title">علاج حب الشباب</h3>
         <p class="service-text">بروتوكول علاجي متكامل يجمع بين الأدوية والتقنيات الحديثة للتخلص من حب الشباب وآثاره نهائياً.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-aos="fade-up" data-aos-delay="80">
         <div class="service-icon">🌟</div>
         <h3 class="service-title">تفتيح البشرة وتوحيد لونها</h3>
         <p class="service-text">جلسات مخصصة لإزالة التصبغات وبقع الشمس وتوحيد لون البشرة للحصول على إشراقة طبيعية.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-aos="fade-up" data-aos-delay="160">
         <div class="service-icon">💆‍♀️</div>
-        <h3 class="service-title">مزيل الدهون بالليزر</h3>
-        <p class="service-text">إجراء غير جراحي لتشكيل الجسم وإزالة الدهون المتراكمة في مناطق البطن والخصر والأفخاذ.</p>
+        <h3 class="service-title">شد وتحسين ملامح الوجه</h3>
+        <p class="service-text">تقنيات غير جراحية لشد البشرة وتحسين ملامح الوجه وإعادة الحيوية والنضارة بدون جراحة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section-alt" id="about">
+  <div class="container">
+    <div class="g2">
+      <div class="about-img" data-aos="fade-right">
+        <img src="https://images.unsplash.com/photo-1629909615957-be38d48fbbe4?w=700&q=75" alt="داخل عيادة لمى للجلدية والتجميل" loading="lazy" />
+        <div class="about-img-badge">
+          <span class="aib-icon">🏆</span>
+          <div>
+            <div class="aib-title">أفضل عيادة جلدية — جدة 2024</div>
+            <div class="aib-sub">جائزة الرعاية الصحية السعودية</div>
+          </div>
+        </div>
+      </div>
+      <div data-aos="fade-left">
+        <span class="eyebrow">عن عيادة لمى</span>
+        <h2 class="section-title" style="text-align:right;">عناية حقيقية بكل تفصيل</h2>
+        <span class="rose-line" style="margin:0 0 1.5rem;"></span>
+        <p style="font-size:.95rem;color:var(--text-body);line-height:1.9;margin-bottom:1.2rem;">تأسست عيادة لمى للجلدية والتجميل في جدة عام 2014 بهدف واحد: تقديم رعاية جلدية احترافية بمستوى عالمي في بيئة راقية ومريحة.</p>
+        <p style="font-size:.95rem;color:var(--text-body);line-height:1.9;margin-bottom:1.8rem;">نؤمن أن كل بشرة مختلفة — لذلك نصمم بروتوكول علاجي مخصص لكل عميلة بعد فحص دقيق وتشخيص احترافي.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div style="background:var(--rose-lt);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:900;color:var(--rose);">+10</div>
+            <div style="font-size:.78rem;color:var(--gray-mid);font-weight:600;margin-top:.2rem;">سنوات في السوق</div>
+          </div>
+          <div style="background:var(--rose-lt);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:900;color:var(--rose);">3</div>
+            <div style="font-size:.78rem;color:var(--gray-mid);font-weight:600;margin-top:.2rem;">طبيبات متخصصات</div>
+          </div>
+          <div style="background:var(--rose-lt);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:900;color:var(--rose);">15+</div>
+            <div style="font-size:.78rem;color:var(--gray-mid);font-weight:600;margin-top:.2rem;">جهاز طبي متقدم</div>
+          </div>
+          <div style="background:var(--rose-lt);border-radius:14px;padding:1.2rem;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:900;color:var(--rose);">4.9⭐</div>
+            <div style="font-size:.78rem;color:var(--gray-mid);font-weight:600;margin-top:.2rem;">تقييم Google</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- DOCTORS -->
-<section class="section section-alt" id="doctors">
+<section class="section" id="doctors">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center" data-aos="fade-up">
       <span class="eyebrow">فريقنا الطبي</span>
       <h2 class="section-title">بأيدي أفضل المتخصصات</h2>
-      <span class="gold-line"></span>
+      <span class="rose-line"></span>
       <p class="section-sub mt2">طواقم طبية حاصلة على أعلى الشهادات في الجلدية والتجميل</p>
     </div>
     <div class="g3">
-      <div class="doctor-card">
-        <div class="doctor-avatar da-1">👩‍⚕️</div>
+      <div class="doctor-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="doctor-photo">
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=75" alt="د. لمى العمري" loading="lazy" />
+        </div>
         <div class="doctor-info">
           <div class="doctor-name">د. لمى العمري</div>
           <div class="doctor-spec">استشارية جلدية وتجميل</div>
           <div class="doctor-bio">بورد سعودي في الجلدية — زمالة في الولايات المتحدة — خبرة أكثر من 12 سنة في علاج البشرة والإجراءات التجميلية.</div>
         </div>
       </div>
-      <div class="doctor-card">
-        <div class="doctor-avatar da-2">👩‍⚕️</div>
+      <div class="doctor-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="doctor-photo">
+          <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=75" alt="د. سارة الزهراني" loading="lazy" />
+        </div>
         <div class="doctor-info">
           <div class="doctor-name">د. سارة الزهراني</div>
           <div class="doctor-spec">أخصائية ليزر وتجميل</div>
           <div class="doctor-bio">ماجستير في الجلدية التجميلية — متخصصة في علاجات الليزر المتقدمة وتقنيات مكافحة الشيخوخة.</div>
         </div>
       </div>
-      <div class="doctor-card">
-        <div class="doctor-avatar da-3">👩‍⚕️</div>
+      <div class="doctor-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="doctor-photo">
+          <img src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=400&q=75" alt="د. نورة القحطاني" loading="lazy" />
+        </div>
         <div class="doctor-info">
           <div class="doctor-name">د. نورة القحطاني</div>
           <div class="doctor-spec">أخصائية علاج حب الشباب</div>
@@ -451,15 +495,15 @@
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="section" id="testimonials">
+<section class="section section-alt" id="testimonials">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center" data-aos="fade-up">
       <span class="eyebrow">آراء عميلاتنا</span>
       <h2 class="section-title">ماذا قالت عميلاتنا؟</h2>
-      <span class="gold-line"></span>
+      <span class="rose-line"></span>
     </div>
-    <div class="g3 mt4">
-      <div class="testi-card">
+    <div class="g3">
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="0">
         <div class="testi-quote">"</div>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">جربت أماكن كثيرة قبل عيادة لمى — ما شفت نتيجة حقيقية. بعد 3 جلسات تقشير مع دكتورة لمى تغير وجهي بشكل لا أصدقه.</p>
@@ -471,24 +515,24 @@
           </div>
         </div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
         <div class="testi-quote">"</div>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">عملت بوتوكس مع دكتورة سارة والنتيجة طبيعية جداً — أحسست بفرق واضح بس ما أحد شك إني عملت شيء. هذا هو الهدف.</p>
         <div class="testi-author">
-          <div class="testi-avatar">ر</div>
+          <div class="testi-avatar" style="background:#7c6fa0;">ر</div>
           <div>
             <div class="testi-name">ريم العتيبي</div>
             <div class="testi-detail">جدة — بوتوكس وفيلر</div>
           </div>
         </div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
         <div class="testi-quote">"</div>
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">كنت أعاني من حب الشباب سنين وما لقيت حل. دكتورة نورة عطتني بروتوكول متكامل وبعد شهرين بشرتي تغيرت 180 درجة.</p>
         <div class="testi-author">
-          <div class="testi-avatar">ه</div>
+          <div class="testi-avatar" style="background:#4a8a6a;">ه</div>
           <div>
             <div class="testi-name">هيا السلمي</div>
             <div class="testi-detail">جدة — علاج حب الشباب</div>
@@ -501,11 +545,11 @@
 
 <!-- CTA -->
 <section class="cta-section" id="contact">
-  <div class="container">
-    <span class="eyebrow" style="background:rgba(181,112,122,.2);color:#e8a0aa;">احجزي الآن</span>
-    <h2 class="cta-title mt2">بشرتك تستحق<br>أفضل عناية</h2>
-    <p class="cta-sub">تواصلي معنا الآن واحصلي على استشارة مجانية مع إحدى طبيباتنا</p>
-    <a href="https://wa.me/212693579039?text=السلام عليكم، أريد استشارة مجانية في عيادة لمى" target="_blank" class="btn-wa-hero" style="display:inline-flex;">
+  <div class="container" style="position:relative;">
+    <span class="eyebrow" style="background:rgba(181,112,122,.2);color:#e8a0aa;" data-aos="fade-up">احجزي الآن</span>
+    <h2 class="cta-title mt2" data-aos="fade-up">بشرتك تستحق<br>أفضل عناية</h2>
+    <p class="cta-sub" data-aos="fade-up">تواصلي معنا الآن واحصلي على استشارة مجانية مع إحدى طبيباتنا</p>
+    <a href="https://wa.me/212693579039?text=السلام عليكم، أريد استشارة مجانية في عيادة لمى" target="_blank" class="btn-wa-hero" style="display:inline-flex;" data-aos="fade-up">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       استشارة مجانية — واتساب
     </a>
@@ -518,13 +562,16 @@
     <div class="footer-logo">عيادة <span>لمى</span> للجلدية والتجميل</div>
     <div class="footer-links">
       <a href="#services">الخدمات</a>
+      <a href="#about">عن العيادة</a>
       <a href="#doctors">الأطباء</a>
       <a href="#testimonials">التقييمات</a>
       <a href="#contact">تواصلي</a>
     </div>
   </div>
-  <div class="footer-copy">جميع الحقوق محفوظة © 2025 عيادة لمى — صُمم بواسطة <a href="https://roayatech.shop" style="color:var(--rose);text-decoration:none;">رواية تك</a></div>
+  <div class="footer-copy">جميع الحقوق محفوظة © 2026 عيادة لمى — صُمم بواسطة <a href="https://roayatech.shop" style="color:#e8a0aa;text-decoration:none;">رواية تك</a></div>
 </footer>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({ duration: 700, once: true, offset: 60 });</script>
 </body>
 </html>
